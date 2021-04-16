@@ -1,22 +1,15 @@
-def solution():
-    N, K = map(int, input().split())
+def solution(N, money):
+    list_coins = [int(input()) for _ in range(N)]
+    count = 0
 
-    coins = []
-    for _ in range(N):
-        coins.append(int(input()))
-    
-    target = K
-    total=0; i=0
-    
-    while target!=0:
-        i += 1
-        coin = coins[-i]
-        if coin > target:
-            continue
-        total += target//coin
-        target = target%coin
-
-    return total
+    for coin in list_coins[::-1]:
+        if money == 0: break
+        if coin <= money:
+            num_coin = money//coin
+            money = money%coin
+            count += num_coin
+    return count
 
 if __name__ == "__main__":
-    print(solution())
+    N, money = map(int, input().split())
+    print(solution(N, money))
