@@ -1,29 +1,29 @@
+dx = [1, 1, -1, -1, 2, 2, -2, -2]
+dy = [2, -2, 2, -2, 1, -1, 1, -1]
+
 def solution():
-    from collections import deque
-    move_x = [-2,-1,-2,-1,1,2,1,2]
-    move_y = [-1,-2,1,2,-2,-1,2,1]
-    I = int(input())
-    stage = [[0 for _ in range(I)] for _ in range(I)]
-    location_x, location_y = map(int, input().split())
-    arrival_x, arrival_y = map(int, input().split())
-    if (arrival_x == location_x) and (arrival_y == location_y):
-        return 0
-    queue = deque()
-    queue.append((location_x, location_y))
-    stage[location_x][location_y] = 1
+    M = int(input())
+    chess_field = [[0 for _ in range(M)] for _ in range(M)]
+    location_now = list(map(int, input().split()))
+    destination = list(map(int, input().split()))
 
-    while queue:
-        location = queue.popleft()
-        if location[0]==arrival_x and location[1]==arrival_y:
-            return stage[location[0]][location[1]]-1
+    if location_now == destination: return 0
+
+    stack = []
+    stack.append(location_now)
+    chess_field[location_now[0]][location_now[1]] = 1
+    
+    while(stack):
+        node = stack.pop(0)
+        if node == destination: return chess_field[node[0]][node[1]]-1
         for i in range(8):
-            new_x = location[0] + move_x[i]
-            new_y = location[1] + move_y[i]
-            if 0<=new_x<I and 0<=new_y<I:
-                if stage[new_x][new_y] == 0:
-                    stage[new_x][new_y] = stage[location[0]][location[1]]+1
-                    queue.append((new_x, new_y))
+            new_x = node[0] + dx[i]
+            new_y = node[1] + dy[i]
+            if 0<=new_x<M and 0<=new_y<M and chess_field[new_x][new_y] == 0:
+                stack.append([new_x, new_y])
+                chess_field[new_x][new_y] = (chess_field[node[0]][node[1]])+1
 
+    return chess_field[node[0]][node[1]]-1
 
 if __name__ == "__main__":
     N = int(input())
