@@ -1,24 +1,27 @@
 def solution():
     equation = input()
-    temp = ''
     numList = []
     flag_Plus = True
-    i = 1
-    for spell in equation:
-        if spell.isdigit():
-            temp += spell
+    idx_Plus = 0
+
+    temp = ''
+    for word in equation:
+        if word.isdigit():
+            temp += word
             continue
-        if spell == '-':
-            flag_Plus = False
-        if flag_Plus:
-            i += 1
+        
         numList.append(int(temp))
         temp = ''
+
+        if word == '-':
+            flag_Plus = False
+        if flag_Plus:
+            idx_Plus += 1
     numList.append(int(temp))
+
     total = 0
-    for _ in range(i):
-        total += numList.pop(0)
-    total -= sum(numList)
+    total += sum(numList[:(idx_Plus+1)])
+    total -= sum(numList[idx_Plus+1:])
     
     return total
 
