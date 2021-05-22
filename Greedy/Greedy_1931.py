@@ -7,7 +7,6 @@ def solution():
 
     count = 1
     pivot = timetable[0][1]
-    ㅁ
     
     for x in timetable[1:]:
         if x[0] >= pivot:
